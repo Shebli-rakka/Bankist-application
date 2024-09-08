@@ -180,88 +180,8 @@ btnSort.addEventListener('click', function (e) {
 
 createUserNames(accounts);
 
-const bankDepositSum = accounts
-  .flatMap(acc => acc.movements)
-  .filter(mov => mov > 0)
-  .reduce((acc, cur) => acc + cur, 0);
 
-const above1000$ = accounts
-  .flatMap(acc => acc.movements)
-  .reduce((acc, cur) => (cur >= 1000 ? ++acc : acc), 0);
 
-const { deposits, withdrawals } = accounts
-  .flatMap(acc => acc.movements)
-  .reduce(
-    (acc, cur) => {
-      acc[cur > 0 ? 'deposits' : 'withdrawals'] += cur;
-      return acc;
-    },
-    { deposits: 0, withdrawals: 0 }
-  );
-const capitale = function (str) {
-  return `${str[0].toUpperCase()}${str.slice(1)}`;
-};
 
-const convert = function (str) {
-  const exceptions = ['a', 'an', 'the', 'but', 'or', 'on', 'in'];
-  return capitale(
-    str
-      .trim()
-      .toLowerCase()
-      .split(' ')
-      .map(word => (exceptions.includes(word) ? word : capitale(word)))
-      .join(' ')
-  );
-};
 
-const dogs = [
-  { weight: 22, curFood: 250, owners: ['Alice', 'Bob'] },
-  { weight: 8, curFood: 200, owners: ['Matilda'] },
-  { weight: 13, curFood: 275, owners: ['Sarah', 'John'] },
-  { weight: 32, curFood: 340, owners: ['Michael'] },
-];
 
-dogs.forEach(dog => {
-  dog.recommendedFood = dog.weight ** 0.75 * 28;
-});
-
-const sarahDog = dogs.find(dog => dog.owners.includes('Sarah'));
-
-if (
-  sarahDog.curFood > 0.9 * sarahDog.recommendedFood &&
-  sarahDog.curFood < 1.1 * sarahDog.recommendedFood
-)
-  console.log(`sarah's dog is eating well`);
-else console.log(`eating bad`);
-
-const ownersEatTooMuch = dogs
-  .filter(dog => dog.curFood > 1.1 * dog.recommendedFood)
-  .flatMap(dog => dog.owners);
-const ownersEatTooLitle = dogs
-  .filter(dog => dog.curFood < 0.9 * dog.recommendedFood)
-  .flatMap(dog => dog.owners);
-
-console.log(`${ownersEatTooLitle.join(' and ')}'s dogs eat too litle!`);
-console.log(`${ownersEatTooMuch.join(' and ')}'s dogs eat too much!`);
-
-console.log(dogs.some(dog => dog.curFood === dog.recommendedFood));
-console.log(
-  dogs.some(
-    dog =>
-      dog.curFood > 0.9 * dog.recommendedFood &&
-      dog.curFood < 1.1 * dog.recommendedFood
-  )
-);
-
-const okayDogs = dogs.filter(
-  dog =>
-    dog.curFood > 0.9 * dog.recommendedFood &&
-    dog.curFood < 1.1 * dog.recommendedFood
-);
-
-const dogsSoretd = dogs
-  .slice()
-  .sort((dog1, dog2) => dog1.recommendedFood - dog2.recommendedFood);
-
-console.log(dogsSoretd);
-console.log(okayDogs);
